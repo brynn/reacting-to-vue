@@ -1,14 +1,31 @@
 <template>
-  <v-expansion-panel>
-    <v-expansion-panel-content v-for="(section,i) in sections" :key="i">
-      <v-icon slot="actions" color="primary">{{ section.icon }}</v-icon>
+  <v-container>
+    <!-- <v-toolbar color="primary">
+      <v-toolbar-title>React-ing To Vue</v-toolbar-title>
+      <v-spacer></v-spacer>
+    </v-toolbar>-->
+    <h2 class="display-3">React-ing To Vue</h2>
+    <v-expansion-panel>
+      <v-expansion-panel-content v-for="(section,i) in sections" :key="i">
+        <v-icon slot="actions" color="accent">{{ section.icon }}</v-icon>
 
-      <div slot="header">{{ section.text }}</div>
-      <v-card>
-        <v-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-card-text>
-      </v-card>
-    </v-expansion-panel-content>
-  </v-expansion-panel>
+        <div slot="header" class="headline">{{ section.text }}</div>
+        <v-card>
+          <v-card-text>
+            <code class="code-react">
+              import Vue from 'vue';
+              import App from './App';
+              &nbsp;
+              new Vue({
+              el: '#app',
+              render: createElement => createElement(App),
+              });
+            </code>
+          </v-card-text>
+        </v-card>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+  </v-container>
 </template>
 <script>
 export default {
@@ -30,4 +47,12 @@ export default {
 </script>
 
 <style>
+code {
+  background-color: #000;
+  display: block;
+}
+
+code.code-react {
+  color: rgb(0, 121, 191);
+}
 </style>
