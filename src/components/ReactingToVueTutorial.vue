@@ -16,14 +16,14 @@ export default {
   data: () => ({
     sections: [
       { text: 'Introduction', icon: 'subject' },
-      { text: 'Create App' },
+      { text: 'Create App', icon: 'create' },
       { text: 'Root Instance' },
       { text: 'Defining Components' },
       { text: 'Lifecycle Methods', icon: 'refresh' },
       { text: 'Rendering HTML', icon: 'code' },
-      { text: 'Binding Data to HTML' },
-      { text: 'Event Handling' },
-      { text: 'Properties & More' },
+      { text: 'Binding Data to HTML', icon: 'settings_input_component' },
+      { text: 'Event Handling', icon: 'settings_input_antenna' },
+      { text: 'Properties & More', icon: 'more_horiz' },
     ],
   }),
 };
