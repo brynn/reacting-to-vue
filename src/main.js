@@ -1,11 +1,13 @@
 import Vue from 'vue';
+import './plugins/vuetify';
+import Vuetify from 'vuetify';
+import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
+
 import App from './App.vue';
-import VueMaterial from 'vue-material';
-import 'vue-material/dist/vue-material.min.css';
-import 'vue-material/dist/theme/black-green-dark.css'; // This line here
+
+Vue.use(Vuetify);
 
 Vue.config.productionTip = false;
-Vue.use(VueMaterial);
 
 new Vue({
   render: h => h(App),

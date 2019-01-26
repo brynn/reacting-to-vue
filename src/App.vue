@@ -1,16 +1,21 @@
 <template>
-  <div id="app">
+  <v-app dark>
     <ReactingToVueTutorial/>
-  </div>
+  </v-app>
 </template>
 
 <script>
 import ReactingToVueTutorial from './components/ReactingToVueTutorial';
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     ReactingToVueTutorial,
+  },
+  data() {
+    return {
+      //
+    };
   },
 };
 </script>
