@@ -17,8 +17,8 @@ export default {
     sections: [
       { text: 'Introduction', icon: 'subject' },
       { text: 'Create App', icon: 'create' },
-      { text: 'Root Instance' },
-      { text: 'Defining Components' },
+      { text: 'Root Instance', icon: 'settings' },
+      { text: 'Defining Components', icon: 'note_add' },
       { text: 'Lifecycle Methods', icon: 'refresh' },
       { text: 'Rendering HTML', icon: 'code' },
       { text: 'Binding Data to HTML', icon: 'settings_input_component' },
