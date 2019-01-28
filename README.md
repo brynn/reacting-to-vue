@@ -1,4 +1,4 @@
-# pep-app
+# React-ing to Vue: A Vue.js Tutorial for Experienced React Developers
 
 ## Project setup
 ```
