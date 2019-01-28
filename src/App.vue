@@ -12,10 +12,6 @@ export default {
   components: {
     ReactingToVueTutorial,
   },
-  data() {
-    return {
-      //
-    };
-  },
 };
 </script>
+

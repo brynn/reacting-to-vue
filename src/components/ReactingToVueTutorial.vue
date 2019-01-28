@@ -1,58 +1,583 @@
 <template>
   <v-container>
-    <!-- <v-toolbar color="primary">
-      <v-toolbar-title>React-ing To Vue</v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-toolbar>-->
-    <h2 class="display-3">React-ing To Vue</h2>
-    <v-expansion-panel>
-      <v-expansion-panel-content v-for="(section,i) in sections" :key="i">
+    <h2 class="display-3">
+      <span class="react font-weight-regular">React→</span>
+      <span class="pr-2 font-weight-thin">ing to</span>
+      <span class="vue font-weight-regular">→Vue</span>
+    </h2>
+    <v-expansion-panel class="mt-4">
+      <v-expansion-panel-content v-for="(section,sectionName, i) in sections" :key="i">
         <v-icon slot="actions" color="accent">{{ section.icon }}</v-icon>
 
-        <div slot="header" class="headline">{{ section.text }}</div>
+        <div slot="header" class="py-2 headline font-weight-regular">{{ section.title }}</div>
         <v-card>
           <v-card-text>
-            <code class="code-react">
-              import Vue from 'vue';
-              import App from './App';
-              &nbsp;
-              new Vue({
-              el: '#app',
-              render: createElement => createElement(App),
-              });
-            </code>
+            <h5 v-if="section.text" class="title mb-4">Setup</h5>
+            <p v-if="section.text" v-html="section.text" class="subheading"></p>
+            <div v-if="section.code">
+              <div class="react">
+                <h5 class="title mb-4">React</h5>
+
+                <div v-for="(file, i) in section.code.react" v-bind:key="i">
+                  <h6 class="subheading" v-if="file.filepath">{{ file.filepath }}</h6>
+                  <code
+                    v-html="file.js"
+                    class="pa-4 mt-2 mb-5 elevation-4 blue-grey darken-4 blue-grey--text text--darken-1"
+                  ></code>
+                </div>
+              </div>
+              <div class="vue">
+                <h5 class="title mb-4">Vue</h5>
+                <div v-for="(file, index) in section.code.vue" v-bind:key="index">
+                  <h6 class="subheading" v-if="file.filepath">{{ file.filepath }}</h6>
+                  <code
+                    v-html="file.js"
+                    class="pa-4 mt-2 mb-5 elevation-4 blue-grey darken-4 blue-grey--text text--darken-1"
+                  ></code>
+                </div>
+              </div>
+            </div>
           </v-card-text>
         </v-card>
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-container>
 </template>
+
+
+
 <script>
 export default {
   name: 'ReactingToVueTutorial',
+
   data: () => ({
-    sections: [
-      { text: 'Introduction', icon: 'subject' },
-      { text: 'Create App', icon: 'create' },
-      { text: 'Root Instance', icon: 'settings' },
-      { text: 'Defining Components', icon: 'note_add' },
-      { text: 'Lifecycle Methods', icon: 'refresh' },
-      { text: 'Rendering HTML', icon: 'code' },
-      { text: 'Binding Data to HTML', icon: 'settings_input_component' },
-      { text: 'Event Handling', icon: 'settings_input_antenna' },
-      { text: 'Properties & More', icon: 'more_horiz' },
-    ],
+    sections: {
+      intro: {
+        title: 'Introduction',
+        icon: 'subject',
+        text:
+          'Before you get started, install these Chrome extensions if you don\'t already have them: <a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en" target="_blank">React Dev Tools</a> and <a href="https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=en" target="_blank">Vue Dev Tools</a>.',
+      },
+      creating: {
+        title: 'Create the App',
+        icon: 'create',
+        code: {
+          react: [
+            {
+              js: `<span class="new-code">npx create-react-app react-app\ncd react-app\nnpm start</span>`,
+            },
+          ],
+          vue: [
+            {
+              js: `<span class="new-code">npm install -g @vue/cli\nvue create vue-app\ncd vue-app\nnpm run serve</span>`,
+            },
+          ],
+        },
+      },
+      mounting: {
+        title: 'Mount the Root Instance',
+        icon: 'settings',
+        code: {
+          react: [
+            {
+              filepath: 'src/index.js',
+              js: `<span class="new-code">import React from 'react'\nimport ReactDOM from 'react-dom'\nimport App from './App'\n\nReactDOM.render(&lt;App /&gt;, document.getElementById('root'))
+</span>`,
+            },
+          ],
+          vue: [
+            {
+              filepath: 'src/main.js',
+              js: `<span class="new-code">&lt;script&gt;\nimport Vue from 'vue'\nimport App from './App'\n\nnew Vue({\n  el: '#app',\n  render: createElement => createElement(App)\n})\n&lt;/script&gt;</span>`,
+            },
+          ],
+        },
+      },
+      components: {
+        title: 'Define Components & Render HTML',
+        icon: 'note_add',
+        code: {
+          react: [
+            {
+              filepath: 'src/App.js',
+              js: `<span class="new-code">import React from 'react'
+import GroceryList from './components/GroceryList'
+
+const App = () => {
+  return (
+    &lt;div&gt;
+      &lt;GroceryList /&gt;
+    &lt;/div&gt;
+  )
+}
+
+export default App</span>
+`,
+            },
+            {
+              filepath: 'src/components/GroceryList.js',
+              js: `<span class="new-code">import React, { Component } from 'react'
+
+class GroceryList extends Component {
+  constructor() {
+    super()
+    this.state = {
+      items: [],
+    }
+  }
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;h2&gt;Groceries&lt;/h2&gt;
+        &lt;ul&gt;&lt;/ul&gt;
+      &lt;/div&gt;
+    )
+  }
+}
+
+export default GroceryList</span>`,
+            },
+          ],
+          vue: [
+            {
+              filepath: 'src/App.vue',
+              js: `<span class="new-code">&lt;template&gt;
+  &lt;div id="app"&gt;
+    &lt;GroceryList /&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import GroceryList from './components/GroceryList'
+
+export default {
+  name: 'App',
+  components: { GroceryList }
+}
+&lt;/script&gt;</span>`,
+            },
+            {
+              filepath: 'src/components/GroceryList.vue',
+              js: `<span class="new-code">&lt;template&gt;
+  &lt;div&gt;
+    &lt;h2&gt;Groceries&lt;/h2&gt;
+    &lt;ul&gt;&lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  name: 'GroceryList',
+  data: () => ({
+    items: []
+  })
+}
+&lt;/script&gt;</span>`,
+            },
+          ],
+        },
+      },
+      lifecycleMethods: {
+        title: 'Use Lifecycle Methods to Load Data',
+        icon: 'refresh',
+        code: {
+          react: [
+            {
+              filepath: 'src/components/GroceryList.js',
+              js: `import React, { Component } from 'react'
+
+<span class="new-code">const groceryList = ['Apple', 'Milk', 'Eggs', 'Spinach', 'Bread']</span>
+
+class GroceryList extends Component {
+  constructor() {
+    super()
+    this.state = {
+      items: [],
+    }
+  }<span class="new-code">
+  componentDidMount() {
+    this.setState({ items: groceryList });
+  }</span>
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;h2&gt;Groceries&lt;/h2&gt;
+        &lt;ul&gt;&lt;/ul&gt;
+      &lt;/div&gt;
+    )
+  }
+}
+
+export default GroceryList`,
+            },
+          ],
+          vue: [
+            {
+              filepath: 'src/components/GroceryList.vue',
+              js: `&lt;template&gt;
+  &lt;div&gt;
+    &lt;h2&gt;Groceries&lt;/h2&gt;
+    &lt;ul&gt;&lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  name: 'GroceryList',
+  data: () => ({
+    items: []
+  }),<span class="new-code">
+  created() {
+    this.items = groceryList
+  },</span>
+}
+&lt;/script&gt;`,
+            },
+          ],
+        },
+      },
+      binding: {
+        title: 'Bind Data to HTML',
+        icon: 'settings_input_component',
+        code: {
+          react: [
+            {
+              filepath: 'src/components/GroceryList.js',
+              js: `import React, { Component } from 'react'
+
+<span class="new-code">const groceryList = ['Apple', 'Milk', 'Eggs', 'Spinach', 'Bread']</span>
+
+class GroceryList extends Component {
+  constructor() {
+    super()
+    this.state = {
+      items: [],
+    }
+  }
+  componentDidMount() {
+    this.setState({ items: groceryList })
+  }
+  render() {
+    return (
+      <span class="new-code">&lt;div&gt;
+        {this.state.items.length ? (
+        </span>&lt;div&gt;
+          &lt;h2&gt;Groceries&lt;/h2&gt;
+          &lt;ul&gt;<span class="new-code">
+          {this.state.items.map(item => (
+            &lt;li&gt;{item}&lt;/li&gt;
+          ))}</span>
+          &lt;/ul&gt;
+        &lt;/div&gt;<span class="new-code">
+        ) : (
+            &lt;div&gt;Loading...&lt;/div&gt;
+          )}
+      &lt;/div&gt;</span>
+    )
+  }
+}
+
+export default GroceryList`,
+            },
+          ],
+          vue: [
+            {
+              filepath: 'src/components/GroceryList.vue',
+              js: `&lt;template&gt;
+  &lt;div&gt;
+    &lt;h2&gt;Groceries&lt;/h2&gt;<span class="new-code">
+    &lt;ul v-if="items.length"&gt;
+      &lt;li v-for="item in items"&gt;{{ item }}&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div v-else&gt;Loading...&lt;/div&gt;
+  </span>&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  name: 'GroceryList',
+  data: () => ({
+    items: []
+  }),
+  created() {
+    this.items = groceryList
+  },
+}
+&lt;/script&gt;`,
+            },
+          ],
+        },
+      },
+      events: {
+        title: 'Handle Events',
+        icon: 'settings_input_antenna',
+        code: {
+          react: [
+            {
+              filepath: 'src/components/GroceryList.js',
+              js: `import React, { Component } from 'react'
+
+const groceryList = ['Apple', 'Milk', 'Eggs', 'Spinach', 'Bread']
+
+class GroceryList extends Component {
+  constructor() {
+    super()
+    this.state = {
+      items: [],
+    }
+    <span class="new-code">this.handleSubmit = this.handleSubmit.bind(this)</span>
+  }
+  componentDidMount() {
+    this.setState({ items: groceryList })
+  }
+  <span class="new-code">handleSubmit(event) {
+    event.preventDefault()
+    const newItem = event.target.newItem.value
+    this.setState({ items: [...this.state.items, newItem] })
+    event.target.newItem.value = ''
+  }</span>
+  render() {
+    return (
+      &lt;div&gt;
+        {this.state.items.length ? (
+        &lt;div&gt;
+          &lt;h2&gt;Groceries&lt;/h2&gt;
+          &lt;ul&gt;
+          {this.state.items.map(item => (
+            &lt;li&gt;{item}&lt;/li&gt;
+          ))}
+          &lt;/ul&gt;
+          <span class="new-code">&lt;form onSubmit={this.handleSubmit}&gt;
+            &lt;input type="text" name="newItem" /&gt;
+            &lt;button type="submit"&gt;Add Item&lt;/button&gt;
+          &lt;/form&gt;</span>
+          &lt;/div&gt;
+        ) : (
+            &lt;div&gt;Loading...&lt;/div&gt;
+          )}
+      &lt;/div&gt;
+    )
+  }
+}
+
+export default GroceryList`,
+            },
+          ],
+          vue: [
+            {
+              filepath: 'src/components/GroceryList.vue',
+              js: `&lt;template&gt;
+  &lt;div&gt;
+    &lt;h2&gt;Groceries&lt;/h2&gt;
+    &lt;ul v-if="items.length"&gt;
+      &lt;li v-for="item in items"&gt;{{ item }}&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div v-else&gt;Loading...&lt;/div&gt;
+    <span class="new-code">&lt;form @submit.prevent="handleSubmit"&gt;
+      &lt;input type="text" name="newItem" v-model="newItem"&gt;
+      &lt;button type="submit"&gt;Add Item&lt;/button&gt;
+    &lt;/form&gt;</span>
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  name: 'GroceryList',
+  data: () => ({
+    items: [],
+    <span class="new-code">newItem: '',</span>
+  }),
+  created() {
+    this.items = groceryList
+  },
+  <span class="new-code">methods: {
+    handleSubmit() {
+      this.items.push(this.newItem)
+      this.newItem = ''
+    },
+  },</span>
+}
+&lt;/script&gt;`,
+            },
+          ],
+        },
+      },
+      properties: {
+        title: 'Pass Down Properties & Compute Properties',
+        icon: 'more_horiz',
+        code: {
+          react: [
+            {
+              filepath: 'src/App.js',
+              js: `import React from 'react'
+import GroceryList from './components/GroceryList'
+
+const App = () => {
+  return (
+    &lt;div&gt;
+      <span class="new-code">&lt;GroceryList owner={'TYPE_YOUR_NAME_HERE'}/&gt;</span>
+    &lt;/div&gt;
+  )
+}
+
+export default App
+`,
+            },
+            {
+              filepath: 'src/components/GroceryList.js',
+              js: `import React, { Component } from 'react'
+
+const groceryList = ['Apple', 'Milk', 'Eggs', 'Spinach', 'Bread']
+
+class GroceryList extends Component {
+  constructor() {
+    super()
+    this.state = {
+      items: [],
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
+    <span class="new-code">this.numItems = this.numItems.bind(this)</span>
+  }
+  componentDidMount() {
+    this.setState({ items: groceryList })
+  }
+  handleSubmit(event) {
+    event.preventDefault()
+    const newItem = event.target.newItem.value
+    this.setState({ items: [...this.state.items, newItem] })
+    event.target.newItem.value = ''
+  }
+  <span class="new-code">numItems() {
+    return this.state.items.length
+  }</span>
+  render() {
+    return (
+      &lt;div&gt;
+        {this.state.items.length ? (
+        &lt;div&gt;
+          <span class="new-code">&lt;h2&gt;Groceries ({this.numItems()})&lt;/h2&gt;
+          &lt;p&gt;For {this.props.owner}&lt;/p&gt;</span>
+          &lt;ul&gt;
+          {this.state.items.map(item => (
+            &lt;li&gt;{item}&lt;/li&gt;
+          ))}
+          &lt;/ul&gt;
+          &lt;form onSubmit={this.handleSubmit}&gt;
+            &lt;input type="text" name="newItem" /&gt;
+            &lt;button type="submit"&gt;Add Item&lt;/button&gt;
+          &lt;/form&gt;
+          &lt;/div&gt;
+        ) : (
+            &lt;div&gt;Loading...&lt;/div&gt;
+          )}
+      &lt;/div&gt;
+    )
+  }
+}
+
+export default GroceryList`,
+            },
+          ],
+          vue: [
+            {
+              filepath: 'src/App.vue',
+              js: `&lt;template&gt;
+  &lt;div id="app"&gt;
+    <span class="new-code">&lt;GroceryList v-bind:owner="'TYPE_YOUR_NAME_HERE'"/&gt;</span>
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import GroceryList from './components/GroceryList'
+
+export default {
+  name: 'App',
+  components: { GroceryList }
+}
+&lt;/script&gt;`,
+            },
+            {
+              filepath: 'src/components/GroceryList.vue',
+              js: `&lt;template&gt;
+  &lt;div&gt;
+    <span class="new-code">&lt;h2&gt;Groceries ({{ numItems }})&lt;/h2&gt;
+    &lt;p&gt;For {{ owner }}&lt;/p&gt;</span>
+    &lt;ul v-if="items.length"&gt;
+      &lt;li v-for="item in items"&gt;{{ item }}&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div v-else&gt;Loading...&lt;/div&gt;
+    &lt;form @submit.prevent="handleSubmit"&gt;
+      &lt;input type="text" name="newItem" v-model="newItem"&gt;
+      &lt;button type="submit"&gt;Add Item&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  name: 'GroceryList',
+  data: () => ({
+    items: [],
+    newItem: '',
+  }),
+  <span class="new-code">props: {
+    owner: String,
+  },
+  computed: {
+    numItems: function() {
+      return this.items.length
+    },
+  },</span>
+  created() {
+    this.items = groceryList
+  },
+  methods: {
+    handleSubmit() {
+      this.items.push(this.newItem)
+      this.newItem = ''
+    },
+  },
+}
+&lt;/script&gt;`,
+            },
+          ],
+        },
+      },
+    },
   }),
 };
 </script>
 
 <style>
-code {
-  background-color: #000;
-  display: block;
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:300,300i,500,500i');
+
+.v-expansion-panel__container .headline {
+  color: #b0bec5;
+}
+.v-expansion-panel__container .headline:hover,
+.v-expansion-panel__container--active .headline {
+  color: #ffffff;
 }
 
-code.code-react {
-  color: rgb(0, 121, 191);
+code {
+  display: block;
+  font-size: 100%;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 500;
+}
+
+code:before {
+  content: '';
+}
+
+h2 .react,
+.react .title,
+.react code .new-code {
+  color: #29b6f6;
+}
+h2 .vue,
+.vue .title,
+.vue code .new-code {
+  color: #9ccc65;
 }
 </style>
