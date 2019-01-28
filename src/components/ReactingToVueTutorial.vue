@@ -9,7 +9,7 @@
         </h2>
       </v-flex>
       <v-flex>
-        <h6 class="headline font-weight-light">A Vue.js tutorial for React developers</h6>
+        <h6 class="headline font-weight-light">An introductory Vue.js tutorial for React developers</h6>
       </v-flex>
     </v-layout>
     <v-expansion-panel class="mt-4">
