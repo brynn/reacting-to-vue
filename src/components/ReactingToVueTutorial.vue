@@ -1,10 +1,17 @@
 <template>
   <v-container>
-    <h2 class="display-3">
-      <span class="react font-weight-regular">React→</span>
-      <span class="pr-2 font-weight-thin">ing to</span>
-      <span class="vue font-weight-regular">→Vue</span>
-    </h2>
+    <v-layout align-baseline>
+      <v-flex>
+        <h2 class="display-3">
+          <span class="react font-weight-regular">React→</span>
+          <span class="pr-2 font-weight-thin">ing to</span>
+          <span class="vue font-weight-regular">→Vue</span>
+        </h2>
+      </v-flex>
+      <v-flex>
+        <h6 class="headline font-weight-light">A Vue.js tutorial for React developers</h6>
+      </v-flex>
+    </v-layout>
     <v-expansion-panel class="mt-4">
       <v-expansion-panel-content v-for="(section,sectionName, i) in sections" :key="i">
         <v-icon slot="actions" color="accent">{{ section.icon }}</v-icon>
@@ -12,9 +19,8 @@
         <div slot="header" class="py-2 headline font-weight-regular">{{ section.title }}</div>
         <v-card>
           <v-card-text>
-            <h5 v-if="section.text" class="title mb-4">Setup</h5>
-            <p v-if="section.text" v-html="section.text" class="subheading"></p>
-            <div v-if="section.code">
+            <div v-if="section.text" v-html="section.text" class="subheading"></div>
+            <div v-if="section.code" class="mt-5">
               <div class="react">
                 <h5 class="title mb-4">React</h5>
 
@@ -55,12 +61,14 @@ export default {
       intro: {
         title: 'Introduction',
         icon: 'subject',
-        text:
-          'Before you get started, install these Chrome extensions if you don\'t already have them: <a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en" target="_blank">React Dev Tools</a> and <a href="https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=en" target="_blank">Vue Dev Tools</a>.',
+        text: `
+          <p>In this tutorial, you'll be making a grocery list app using both <a href="https://reactjs.org/" target="_blank">React</a> and <a href="https://vuejs.org/" target="_blank">Vue</a>. In the process of building this (extremely) simple app, you'll learn the major differences between the two frameworks. While far from comprehensive, this tutorial provides an accessible, hands-on introduction to Vue for those not yet familiar with it, assuming at least an intermediate knowledge of React.</p> <p>Before you get started, make sure you have these Chrome extensions installed: <a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en" target="_blank">React Dev Tools</a> and <a href="https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=en" target="_blank">Vue Dev Tools</a>.</p>
+          <p>At the end of this tutorial, both versions of your app will look like this (with 'Brynn' replaced by your name):</p><p><img src="/app.png" /></p>`,
       },
       creating: {
         title: 'Create the App',
         icon: 'create',
+        text: `<p>First create two new directories on your computer, one for the React app and one for the Vue app. Then use <a href="https://facebook.github.io/create-react-app/ target="_blank">Create React App</a> and <a href="https://cli.vuejs.org/guide/creating-a-project.html#vue-create" target="_blank">Vue Create</a> to initialize both projects with some boilerplate code.</p>`,
         code: {
           react: [
             {
@@ -77,12 +85,12 @@ export default {
       mounting: {
         title: 'Mount the Root Instance',
         icon: 'settings',
+        text: `<p>Before we can do anything else, we need to tell our app which HTML element will serve as the root of our front-end components. Our React boilerplate gives this element an ID of 'root', while our Vue boilerplate calls it 'app', so we'll mount our React and Vue instances on these divs, respectively.</p>`,
         code: {
           react: [
             {
               filepath: 'src/index.js',
-              js: `<span class="new-code">import React from 'react'\nimport ReactDOM from 'react-dom'\nimport App from './App'\n\nReactDOM.render(&lt;App /&gt;, document.getElementById('root'))
-</span>`,
+              js: `<span class="new-code">import React from 'react'\nimport ReactDOM from 'react-dom'\nimport App from './App'\n\nReactDOM.render(&lt;App /&gt;, document.getElementById('root'))</span>`,
             },
           ],
           vue: [
@@ -96,6 +104,7 @@ export default {
       components: {
         title: 'Define Components & Render HTML',
         icon: 'note_add',
+        text: `<p>Now it's time for the fun stuff! We'll make a component called GroceryList, which will contain all of our app's content and logic. As you'll see in the code snippets below, the major difference between React and Vue is that Vue uses regular HTML inside of a <code style="color: #fff">&lt;template&gt;</code> tag, rather than JSX inside of a render function. After completing this step, both of your apps should display an <code style="color: #fff">&lt;h2&gt;</code> element containing the text 'Groceries'.</p>`,
         code: {
           react: [
             {
@@ -111,8 +120,7 @@ const App = () => {
   )
 }
 
-export default App</span>
-`,
+export default App</span>`,
             },
             {
               filepath: 'src/components/GroceryList.js',
@@ -180,6 +188,7 @@ export default {
       lifecycleMethods: {
         title: 'Use Lifecycle Methods to Load Data',
         icon: 'refresh',
+        text: `<p>Our grocery list isn't very useful without anything in it! For the purposes of this tutorial, we won't worry about saving anything to a database; instead, we'll simply declare an array of items at the top of our component. To load these items onto our local state, we'll use lifecycle methods: <code style="color: #29b6f6">componentDidMount()</code> for our React app and <code style="color: #9ccc65">created()</code> for our Vue app.</p>`,
         code: {
           react: [
             {
@@ -222,6 +231,9 @@ export default GroceryList`,
 &lt;/template&gt;
 
 &lt;script&gt;
+<span class="new-code">
+const groceryList = ['Apple', 'Milk', 'Eggs', 'Spinach', 'Bread']
+</span>
 export default {
   name: 'GroceryList',
   data: () => ({
@@ -239,6 +251,7 @@ export default {
       binding: {
         title: 'Bind Data to HTML',
         icon: 'settings_input_component',
+        text: `<p>Now that we have our data on our component state, we need to actually display it! React and Vue bind data to HTML in slightly different ways. Instead of JSX, which can be a bit awkward and unwieldy, Vue uses <a href="https://vuejs.org/v2/api/#Directives target="_blank">directives</a> to transform plain HTML elements into reactive, dynamically changing components that re-render every time their data changes. <code style="color: #9ccc65">v-if</code> and <code style="color: #9ccc65">v-for</code> are both commonly used directives.</p>`,
         code: {
           react: [
             {
@@ -311,6 +324,7 @@ export default {
       events: {
         title: 'Handle Events',
         icon: 'settings_input_antenna',
+        text: `<p>What good is our grocery list if we can't add anything to it?! Let's add a simple form <code style="color: #fff">&lt;input&gt;</code> and <code style="color: #fff">&lt;button&gt;</code> to our component. You'll notice that Vue uses a directive, <code style="color: #9ccc65">v-model</code>, to directly tie our input's value to a variable, <code style="color: #9ccc65">newItem</code>, on our component state. This allows us to avoid interacting with the DOM (e.g. <code style="color: #29b6f6">event.target.newItem.value</code> in our React code) entirely! Also note that Vue allows us to mutate our data/state object directly, which we do in our form's <code style="color: #9ccc65">handleSubmit()</code> event handler.</p>`,
         code: {
           react: [
             {
@@ -405,6 +419,7 @@ export default {
       properties: {
         title: 'Pass Down Properties & Compute Properties',
         icon: 'more_horiz',
+        text: `<p>By this point, you should have two functioning grocery list apps, one written in React and the other in Vue. Nice! I hope this tutorial has helped you get a sense of their fundamental similarities and differences. This last section illustrates a few more differences involving properties, or 'props' as you probably know them from React. In Vue, we can define <a href="https://vuejs.org/v2/guide/computed.html" target="_blank">computed</a> properties, which are handy for executing logic on data values from our component state. We can achieve the same functionality in React by defining a class method on our component and returning the computed value.</p>`,
         code: {
           react: [
             {
@@ -551,6 +566,17 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono:300,300i,500,500i');
 
+p {
+  max-width: 66%;
+  font-size: 20px;
+  line-height: 36px;
+  margin-bottom: 20px;
+}
+
+a:hover {
+  color: #fff;
+}
+
 .v-expansion-panel__container .headline {
   color: #b0bec5;
 }
@@ -564,9 +590,16 @@ code {
   font-size: 100%;
   font-family: 'Roboto Mono', monospace;
   font-weight: 500;
+  background-color: #263238!important;
 }
 
-code:before {
+p code {
+  display: inline-block;
+  padding: 0 5px;
+}
+
+code:before,
+code:after {
   content: '';
 }
 
