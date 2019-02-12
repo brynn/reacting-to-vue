@@ -9,7 +9,13 @@
         </h2>
       </v-flex>
       <v-flex>
-        <h6 class="headline font-weight-light">An introductory Vue.js tutorial for React developers</h6>
+        <h6 class="headline font-weight-light">
+          An introductory Vue.js tutorial by
+          <a
+            href="http://brynnshepherd.com"
+            target="_blank"
+          >Brynn Shepherd</a>
+        </h6>
       </v-flex>
     </v-layout>
     <v-expansion-panel class="mt-4">
@@ -567,10 +573,11 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono:300,300i,500,500i');
 
 p {
-  max-width: 66%;
-  font-size: 20px;
-  line-height: 36px;
-  margin-bottom: 20px;
+  max-width: 70%;
+  font-size: 16px;
+  line-height: 26px;
+  margin-bottom: 16px;
+  font-family: 'Libre Baskerville', serif;
 }
 
 a:hover {
@@ -579,6 +586,7 @@ a:hover {
 
 .v-expansion-panel__container .headline {
   color: #b0bec5;
+  font-family: 'Roboto Mono', monospace !important;
 }
 .v-expansion-panel__container .headline:hover,
 .v-expansion-panel__container--active .headline {
@@ -590,7 +598,7 @@ code {
   font-size: 100%;
   font-family: 'Roboto Mono', monospace;
   font-weight: 500;
-  background-color: #263238!important;
+  background-color: #263238 !important;
 }
 
 p code {
@@ -601,6 +609,11 @@ p code {
 code:before,
 code:after {
   content: '';
+}
+
+h2.display-3 .react,
+h2.display-3 .vue {
+  font-family: 'Libre Baskerville', serif !important;
 }
 
 h2 .react,
